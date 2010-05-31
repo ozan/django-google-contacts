@@ -3,8 +3,9 @@ import gdata.contacts.service
 from django.conf import settings
 from django.shortcuts import redirect
 
-from json_response import JsonResponse
 from models import ActionState
+from utils import JsonResponse
+
 
 def google_get_state_token(request, action_type_id, action_id):
     action_state = ActionState.objects.create(**{
@@ -24,7 +25,6 @@ def google_login(request):
         request.session[settings.GOOGLE_COOKIE_CONSENT] = gcs.GetAuthSubToken()
     
     return redirect(request.session.get(settings.GOOGLE_REDIRECT_SESSION_VAR))
-
 
 def google_logout(request):
     if request.session.get(settings.GOOGLE_COOKIE_CONSENT):
